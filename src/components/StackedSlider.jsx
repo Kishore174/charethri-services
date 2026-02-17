@@ -16,6 +16,46 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
 import { useRef } from "react";
 import estamp from "../assets/e-stamp-3.jpg"
+/* ============================= */
+/* 🔥 BACKGROUND PARTICLES */
+/* ============================= */
+function BackgroundParticles() {
+  const particles = Array.from({ length: 40 });
+
+  return (
+    <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+      {particles.map((_, i) => {
+        const size = Math.random() * 6 + 2;
+        const left = Math.random() * 100;
+        const duration = Math.random() * 20 + 15;
+        const delay = Math.random() * 5;
+
+        return (
+          <motion.span
+            key={i}
+            className="absolute  bg-gray-400   rounded-full"
+            style={{
+              width: size,
+              height: size,
+              left: `${left}%`,
+              bottom: "-10px",
+            }}
+            animate={{
+              y: "-110vh",
+              opacity: [0, 1, 1, 0],
+            }}
+            transition={{
+              duration,
+              delay,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 // ✅ ADD THIS BACK (VERY IMPORTANT)
 const sliderServices = [
@@ -190,7 +230,9 @@ const sendEmail = (e) => {
 };
 
   return (
-<div className="min-h-screen md:h-screen w-full flex items-center justify-center bg-[#b7b7a1] overflow-auto md:overflow-hidden px-4 sm:px-6 lg:px-10 py-8 sm:py-10">
+<div className="relative min-h-screen md:h-screen w-full flex items-center justify-center bg-white overflow-auto md:overflow-hidden px-4 sm:px-6 lg:px-10 py-8 sm:py-10">
+  <BackgroundParticles />
+
 
       {/* LOGO */}
       <a
@@ -209,8 +251,8 @@ const sendEmail = (e) => {
 <button
   onClick={prevSlide}
   className="absolute left-2 sm:left-12 top-1/2 -translate-y-1/2 z-40 
-  bg-white/20 backdrop-blur-md text-white p-3 sm:p-4 
-  rounded-full hover:bg-white/30 transition"
+  bg-black/20 backdrop-blur-md text-white p-3 sm:p-4 
+  rounded-full hover:bg-blacck/30 transition"
 >
   <FaChevronLeft size={20} />
 </button>
@@ -219,8 +261,8 @@ const sendEmail = (e) => {
 <button
   onClick={nextSlide}
   className="absolute right-2 sm:right-12 top-1/2 -translate-y-1/2 z-40 
-  bg-white/20 backdrop-blur-md text-white p-3 sm:p-4 
-  rounded-full hover:bg-white/30 transition"
+  bg-black/20 backdrop-blur-md text-white p-3 sm:p-4 
+  rounded-full hover:bg-black/30 transition"
 >
   <FaChevronRight size={20} />
 </button>
@@ -239,85 +281,134 @@ const sendEmail = (e) => {
   dragElastic={0.2}
   onDragEnd={handleDragEnd}
   className={`absolute w-full 
-  h-auto md:h-[520px]
-  rounded-[24px] md:rounded-[32px]
-  backdrop-blur-[12px]
-
-  shadow-[0_30px_60px_rgba(0,0,0,0.25)]
-  overflow-hidden ${card.bg}`}
+    h-auto md:h-[530px]
+    rounded-[28px]
+    bg-white/70 backdrop-blur-2xl
+    border border-black/40
+     
+    overflow-hidden`}
   animate={{
-    y: position * (isMobile ? 45 : 90),
-    scale: position === 0 ? 1 : 0.94,
-    opacity: position === 0 ? 1 : 0.5,
+    y: position * (isMobile ? 50 : 100),
+    scale: position === 0 ? 1 : 0.95,
+    opacity: position === 0 ? 1 : 0.4,
     zIndex: 30 - Math.abs(position),
   }}
   transition={{ duration: 0.6, ease: "easeOut" }}
 >
 
 
+
               <div className="absolute inset-0 bg-white/5 z-0" />
 
-              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 h-full text-white">
+   <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 h-full text-gray-800">
+
 
 <div className="p-5 sm:p-8 md:p-12 flex flex-col justify-between">
 
                   <div>
                     <div className="mb-4">{card.icon}</div>
 
-            <h2 className="text-xl sm:text-3xl md:text-4xl font-extrabold leading-snug">
+   <h2 className="text-xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight">
+
 
                       {card.title}
                     </h2>
+{card.isForm ? (
+  <form
+    ref={formRef}
+    onSubmit={sendEmail}
+    className="mt-6 space-y-5 max-w-md"
+  >
 
-                    {card.isForm ? (
-                    <form
-  ref={formRef}
-  onSubmit={sendEmail}
-  className="mt-6 space-y-4 max-w-md"
->
+    {/* Name */}
+    <div className="relative">
+      <input
+        type="text"
+        name="from_name"
+        required
+        onFocus={() => setIsPaused(true)}
+        placeholder=" "
+        className="peer w-full px-4 pt-5 pb-2 rounded-xl 
+        bg-white/80 border border-gray-300 
+        text-gray-800 outline-none 
+        focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 
+        transition"
+      />
+      <label className="absolute left-4 top-2 text-sm text-gray-500 
+        peer-placeholder-shown:top-4 
+        peer-placeholder-shown:text-base 
+        peer-placeholder-shown:text-gray-400 
+        peer-focus:top-2 peer-focus:text-sm peer-focus:text-indigo-600 
+        transition-all">
+        Name
+      </label>
+    </div>
 
-<input
-  type="text"
-  name="from_name"
-  required
-  onFocus={() => setIsPaused(true)}
-  placeholder="Name"
-  className="w-full px-4 py-3 rounded-lg bg-white/20 placeholder-white text-white outline-none"
+    {/* Phone */}
+    <div className="relative">
+      <input
+        type="tel"
+        name="phone"
+        required
+        onFocus={() => setIsPaused(true)}
+        placeholder=" "
+        className="peer w-full px-4 pt-5 pb-2 rounded-xl 
+        bg-white/80 border border-gray-300 
+        text-gray-800 outline-none 
+        focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 
+        transition"
+      />
+      <label className="absolute left-4 top-2 text-sm text-gray-500 
+        peer-placeholder-shown:top-4 
+        peer-placeholder-shown:text-base 
+        peer-placeholder-shown:text-gray-400 
+        peer-focus:top-2 peer-focus:text-sm peer-focus:text-indigo-600 
+        transition-all">
+        Phone
+      </label>
+    </div>
 
-/>
+    {/* Service */}
+    <div className="relative">
+      <input
+        type="text"
+        name="service"
+        required
+        onFocus={() => setIsPaused(true)}
+        placeholder=" "
+        className="peer w-full px-4 pt-5 pb-2 rounded-xl 
+        bg-white/80 border border-gray-300 
+        text-gray-800 outline-none 
+        focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 
+        transition"
+      />
+      <label className="absolute left-4 top-2 text-sm text-gray-500 
+        peer-placeholder-shown:top-4 
+        peer-placeholder-shown:text-base 
+        peer-placeholder-shown:text-gray-400 
+        peer-focus:top-2 peer-focus:text-sm peer-focus:text-indigo-600 
+        transition-all">
+        Service Needed
+      </label>
+    </div>
 
-<input
-  type="tel"
-  name="phone"
-  required
-  onFocus={() => setIsPaused(true)}
-  placeholder="Phone"
-  className="w-full px-4 py-3 rounded-lg bg-white/20 placeholder-white text-white outline-none"
+    {/* Submit Button */}
+    <button
+      type="submit"
+      disabled={loading}
+      className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 
+      text-white font-semibold py-3 rounded-xl 
+      hover:scale-105 hover:shadow-lg 
+      transition-all duration-300"
+    >
+      {loading ? "Sending..." : "Submit Request"}
+    </button>
 
-/>
+  </form>
+) : (
 
-<input
-  type="text"
-  name="service"
-  required
-  onFocus={() => setIsPaused(true)}
-  placeholder="Service Needed"
-  className="w-full px-4 py-3 rounded-lg bg-white/20 placeholder-white text-white outline-none"
+                     <p className="mt-4 text-sm sm:text-base md:text-lg text-gray-600 max-w-md whitespace-pre-line leading-relaxed">
 
-/>
-
-
-                      <button
-  type="submit"
-  disabled={loading}
-  className="w-full bg-white text-black font-semibold py-3 rounded-lg hover:bg-gray-200 transition"
->
-  {loading ? "Sending..." : "Submit"}
-</button>
-
-                      </form>
-                    ) : (
-                     <p className="mt-3 text-xs sm:text-base md:text-lg text-white/90 max-w-md whitespace-pre-line">
 
                         {card.description}
                       </p>
@@ -352,7 +443,7 @@ const sendEmail = (e) => {
                 </div>
 
                 {/* RIGHT IMAGE */}
-                <div className="relative overflow-hidden h-[220px] sm:h-[520px] md:h-[520px]
+                <div className="relative overflow-hidden h-[220px] sm:h-[520px] md:h-[550px]
 ">
                   <img
                     src={card.img}
@@ -362,7 +453,7 @@ const sendEmail = (e) => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-black/60 to-transparent" />
 
-  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-4 flex md:flex-wrap flex-none justify-center md:justify-start gap-2 sm:gap-3">
+  <div className="absolute bottom-12 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-4 flex md:flex-wrap flex-none justify-center md:justify-start gap-2 sm:gap-3">
 
                     <a
                       href="tel:+919832444111"
